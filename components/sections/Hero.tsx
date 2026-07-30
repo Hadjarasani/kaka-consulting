@@ -1,16 +1,16 @@
 export default function Hero() {
   return (
     <section className="flex min-h-screen flex-col items-center justify-center bg-[#701C2C] px-6 text-center text-white">
-      <h1 className="mb-6 text-5xl font-bold">
+      <h1 className="text-3xl md:text-5xl font-bold text-white">
         KAKA CONSULTING
       </h1>
 
-      <p className="mb-10 max-w-2xl text-xl">
+      <p className="mb-10 max-w-2xl px-6 text-base md:mb-10 max-w-2xl text-xl">
         Accélérez votre transformation digitale grâce à des solutions
         web, data et intelligence artificielle.
       </p>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <button className="rounded-lg bg-white px-6 py-3 font-semibold text-[#701C2C] transition hover:scale-105">
           Nos services
         </button>
