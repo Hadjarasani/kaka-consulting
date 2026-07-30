@@ -15,7 +15,7 @@ const navLinks = [
   },
   {
     label: "Nous connaître",
-    href: "#nous-connaitre",
+    href: "#apropos",
   },
   {
     label: "Contact",
@@ -84,7 +84,7 @@ export default function Navbar() {
             </Link>
 
             <Link 
-            href="#nous-connaitre"
+            href="#apropos"
             onClick={() => setIsOpen(false)}
             >
             Nous connaître
