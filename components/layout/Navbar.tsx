@@ -4,23 +4,22 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 const navLinks = [
   {
     label: "Services",
-    href: "/services",
+    href: "#services",
   },
   {
     label: "Secteurs d'activité",
-    href: "/secteurs",
+    href: "#secteurs",
   },
   {
     label: "Nous connaître",
-    href: "/nous-connaitre",
+    href: "#nous-connaitre",
   },
   {
     label: "Contact",
-    href: "/contact",
+    href: "#contact",
   },
 ];
 
@@ -71,28 +70,28 @@ export default function Navbar() {
         <div className="lg:hidden bg-white border-t">
           <div className="flex flex-col gap-6 p-6">
             <Link 
-            href="/services"
+            href="#services"
             onClick={() => setIsOpen(false)}
             >
             Services 
             </Link>
 
             <Link 
-            href="/secteurs"
+            href="#secteurs"
             onClick={() => setIsOpen(false)}
             >
             Secteurs d'activité
             </Link>
 
             <Link 
-            href="/nous-connaitre"
+            href="#nous-connaitre"
             onClick={() => setIsOpen(false)}
             >
             Nous connaître
             </Link>
 
             <Link 
-            href="/contact"
+            href="#contact"
             onClick={() => setIsOpen(false)}
             >
             Contact 
@@ -100,7 +99,7 @@ export default function Navbar() {
 
 
             <Link 
-            href="/devis"
+            href="#devis"
             className="rounded-xl bg-[#701C2C] px-4 py-3 text-center text-white"
             onClick={() => setIsOpen(false)}
             >

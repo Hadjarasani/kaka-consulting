@@ -5,7 +5,7 @@ export default function Hero() {
         KAKA CONSULTING
       </h1>
 
-      <p className="mb-10 max-w-2xl px-6 text-base md:mb-10 max-w-2xl text-xl">
+      <p className="mb-10 max-w-2xl px-6 text-base md:mb-10 max-w-2xl mt-4 text-xl">
         Accélérez votre transformation digitale grâce à des solutions
         web, data et intelligence artificielle.
       </p>
