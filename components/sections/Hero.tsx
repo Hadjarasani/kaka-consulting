@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center bg-[#701C2C] px-6 text-center text-white">
+    <section className="flex min-h-screen flex-col items-center justify-center bg-[#4A0015] px-6 text-center text-white">
       <h1 className="text-3xl md:text-5xl font-bold text-white">
         KAKA CONSULTING
       </h1>
