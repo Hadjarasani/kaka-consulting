@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mail, Building2, User, FileText } from "lucide-react";
 import Confetti from "react-confetti";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Contact() {
     const [name, setName] = useState("");
@@ -80,6 +81,7 @@ export default function Contact() {
       setLoading(false);
     }
 };
+
   return (
     <section id="contact" className="bg-[#4A0015] px-6 py-24">
       <div className="mx-auto max-w-7xl">
@@ -166,6 +168,9 @@ export default function Contact() {
                 className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
               />
             </div>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+            />
 
             <button
               type="submit"
