@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Building2, User, FileText } from "lucide-react";
+import Confetti from "react-confetti";
 
 export default function Contact() {
     const [name, setName] = useState("");
@@ -11,7 +12,7 @@ export default function Contact() {
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
 
     const handleSubmit = async (
       e: React.FormEvent<HTMLFormElement>
@@ -20,7 +21,34 @@ export default function Contact() {
 
       setLoading(true);
       setSuccess(false);
-      setError(false);
+      setError("");
+
+      if (
+        !name.trim() ||
+        !email.trim() ||
+        !company.trim() ||
+        !message.trim()
+      ) {
+        setError("Tous les champs sont obligatoires");
+        setLoading(false);
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if(!emailRegex.test(email)){
+        setError("Veuillez saisir une adresse e-mail valide.");
+        setLoading(false);
+        return;
+      }
+
+      if (message.length < 20) {
+        setError(
+          "Le message doit contenir au moins 20 caractères."
+        );
+        setLoading(false);
+        return;
+      }
 
       try {
         const response = await fetch("/api/contact", {
@@ -47,7 +75,7 @@ export default function Contact() {
       setCompany("");
       setMessage("");
     } catch {
-      setError(true);
+      setError("Une erreur est survenue. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -72,7 +100,7 @@ export default function Contact() {
         </div>
 
         <div className="mx-auto max-w-4xl rounded-3xl bg-white p-10 shadow-2xl">
-
+          {success && <Confetti />}
           <form onSubmit={handleSubmit} className="space-y-6">
 
             <div className="grid gap-6 md:grid-cols-2">
@@ -148,14 +176,14 @@ export default function Contact() {
             </button>
 
             {success && (
-                <p className="mt-4 text-center text-green-600">
-                 ✅ Votre demande a été envoyée avec succès !
-                </p>
+                 <div className="rounded-xl bg-green-100 p-4 text-center text-green-700">
+                  ✅ Votre demande a été envoyée avec succès !
+                </div>
             )}
 
             {error && (
                 <p className="mt-4 text-center text-red-600">
-                ❌ Une erreur est survenue. Veuillez réessayer.
+                ❌{error}
                 </p>
             )}
 

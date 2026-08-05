@@ -36,6 +36,44 @@ export async function POST(request: Request) {
       `,
     });
 
+    await resend.emails.send({
+      from: "KAKA CONSULTING <contact@kakaconsulting.fr>",
+      to: email,
+
+      subject: "Nous avons bien reçu votre demande",
+
+      html: `
+      <div style="font-family: Arial, sans-serif; padding: 20px;">
+        <h2 style="color: #4A0015;">
+          Bonjour ${name},
+        </h2>
+
+        <p>
+          Merci d'avoir contacté KAKA CONSULTING.
+        </p>
+
+        <p>
+          Nous avons bien reçu votre demande concernant
+          <strong>${company}</strong> et nous vous répondrons
+          dans les plus brefs délais.
+        </p>
+
+        <p>
+          En attendant, n'hésitez pas à consulter notre site :
+          https://kakaconsulting.fr
+        </p>
+
+        <hr/>
+
+        <p>
+          Cordialement,<br />
+          <strong>L'équipe KAKA CONSULTING</strong>
+        </p>
+        
+      </div>
+      `,
+    });
+
     return NextResponse.json(
       { success: true },
       { status: 200 }
