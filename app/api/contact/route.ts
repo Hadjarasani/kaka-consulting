@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { error } from "console";
+import { supabase } from "@/lib/supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,6 +10,26 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const { name, email, company, message } = body;
+
+    const { error: dbError} = await supabase
+      .from("contacts")
+      .insert([
+        {
+          name,
+          email,
+          company,
+          message,
+        },
+    ]);
+
+    if(dbError) {
+      console.error(dbError);
+
+      return NextResponse.json(
+        { error: "Erreur lors de l'enregistrement" },
+        { status: 500 }
+      );
+    }
 
     if(!name || !email || !company || !message){
         return NextResponse.json(
@@ -69,7 +90,7 @@ export async function POST(request: Request) {
           Cordialement,<br />
           <strong>L'équipe KAKA CONSULTING</strong>
         </p>
-        
+
       </div>
       `,
     });
