@@ -7,19 +7,19 @@ import Link from "next/link";
 const navLinks = [
   {
     label: "Services",
-    href: "#services",
+    href: "/#services",
   },
   {
     label: "Secteurs d'activité",
-    href: "#secteurs",
+    href: "/#secteurs",
   },
   {
     label: "Nous connaître",
-    href: "#apropos",
+    href: "/#apropos",
   },
   {
     label: "Contact",
-    href: "#contact",
+    href: "/#contact",
   },
 ];
 
