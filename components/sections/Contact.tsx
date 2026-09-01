@@ -177,7 +177,7 @@ export default function Contact() {
               disabled={loading}
               className="w-full rounded-xl bg-[#701C2C] px-6 py-4 font-semibold text-white transition duration-300 hover:scale-[1.02]"
             >
-              {loading ? "Envoi en cours..." : "Demander un devis"}
+              {loading ? "Envoi en cours..." : "Contactez-nous"}
             </button>
 
             {success && (
