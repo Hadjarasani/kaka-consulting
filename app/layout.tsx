@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import RecaptchaProvider from "@/components/providers/RecaptchaProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +26,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col">
         <Navbar />
 
         <main className="flex-1">
-          {children}
+          <RecaptchaProvider>
+            {children}
+          </RecaptchaProvider>
         </main>
       </body>
     </html>

@@ -22,7 +22,50 @@ export async function POST(request: Request) {
       budget,
       deadline,
       message,
+      recaptchaToken,
     } = body;
+
+    // Vérification présence token
+    if (!recaptchaToken) {
+        return NextResponse.json (
+            {
+                success: false,
+                error: "Vérification anti-spam manquante.",
+            },
+            { status: 400 }
+        );
+    }
+
+    // Vérification reCAPTCHA v3
+    const recaptchaResponse = await fetch (
+        "https://www.google.com/recaptcha/api/siteverify",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams ({
+                secret: process.env.RECAPTCHA_SECRET_KEY!,
+                response: recaptchaToken,
+            })
+        }
+    );
+    const recaptchaData = await recaptchaResponse.json();
+    console.log("reCAPTCHA Quote:", recaptchaData);
+
+    if (
+        !recaptchaData.success ||
+        recaptchaData.score < 0.5 ||
+        recaptchaData.action !== "quote"
+    ){
+        return NextResponse.json(
+            {
+                success: false,
+                error: "La vérification anti-spam a échoué.",
+            },
+            { status: 400 }
+        );
+    }
 
     // Validation côté serveur
     if (

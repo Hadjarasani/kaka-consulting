@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
   User,
   Mail,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 export default function QuoteForm() {
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -62,6 +64,14 @@ export default function QuoteForm() {
       setLoading(false);
       return;
     }
+    if (!executeRecaptcha) {
+        setError(
+            "La protection anti-spam n'est pas encore prête. Veuillez réessayer."
+        );
+        setLoading(false);
+        return;
+    }
+    const recaptchaToken = await executeRecaptcha("quote");
 
     try {
       // Notre API sera créée à l'étape suivante.
@@ -79,6 +89,7 @@ export default function QuoteForm() {
           budget,
           deadline,
           message,
+          recaptchaToken,
         }),
       });
 

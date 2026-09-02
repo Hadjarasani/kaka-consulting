@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Mail, Building2, User, FileText } from "lucide-react";
 import Confetti from "react-confetti";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function Contact() {
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [company, setCompany] = useState("");
@@ -50,6 +51,14 @@ export default function Contact() {
         setLoading(false);
         return;
       }
+      if (!executeRecaptcha) {
+        setError(
+          "La protection anti-spam n'est pas encore prête. Veuillez réessayer."
+        );
+        setLoading(false);
+        return;
+      }
+      const recaptchaToken = await executeRecaptcha("contact");
 
       try {
         const response = await fetch("/api/contact", {
@@ -62,6 +71,7 @@ export default function Contact() {
           email,
           company,
           message,
+          recaptchaToken,
         }),
       });
 
@@ -168,9 +178,7 @@ export default function Contact() {
                 className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
               />
             </div>
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-            />
+            
 
             <button
               type="submit"
