@@ -1,9 +1,21 @@
-import Link
- from "next/link";
+import Link from "next/link";
+
 export default function Hero() {
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center border-t border-white/10 bg-[#2b0010] px-6 text-center text-white">
-      <h1 className="text-3xl md:text-5xl font-bold text-white">
+    <section className=" relative flex min-h-screen flex-col items-center justify-center border-t border-white/10 bg-[#2b0010] px-6 text-center text-white">
+
+      {/* Motif de K en arrière-plan */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.06]"
+        style={{
+          backgroundImage: "url('/images/KAKACONSULTINGLogo.svg')",
+          backgroundSize: "135px 135px",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "center",
+        }}
+      />
+
+      <h1 className="text-4xl md:text-6xl font-semibold tracking-[0.08em] text-white">
         KAKA CONSULTING
       </h1>
 
@@ -21,7 +33,7 @@ export default function Hero() {
 
         <Link
           href="/contact"
-          className="rounded-lg border border-white px-6 py-3 transition hover:bg-white hover:text-[#701C2C]">
+          className="rounded-lg border border-white px-6 py-3 font-semibold transition hover:bg-white hover:text-[#701C2C]">
           Nous contacter
         </Link>
       </div>
