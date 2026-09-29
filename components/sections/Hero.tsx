@@ -6,7 +6,7 @@ export default function Hero() {
 
       {/* Motif de K en arrière-plan */}
       <div
-        className="absolute inset-0 z-0 opacity-[0.06]"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
         style={{
           backgroundImage: "url('/images/KAKACONSULTINGLogo.svg')",
           backgroundSize: "135px 135px",
