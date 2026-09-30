@@ -49,6 +49,24 @@ export default function AdminPage() {
   const [error, setError] = useState("");
   const [selectedRequest, setSelectedRequest] =
   useState<QuoteRequest | null>(null);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("Tous");
+
+  //créer les demandes filtrées
+  const filteredRequests = requests.filter((request) => {
+  const searchValue = search.toLowerCase().trim();
+
+    const matchesSearch =
+      request.company.toLowerCase().includes(searchValue) ||
+      request.name.toLowerCase().includes(searchValue) ||
+      request.email.toLowerCase().includes(searchValue);
+
+    const matchesStatus =
+      statusFilter === "Tous" ||
+      request.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
 
   //modification du status dans la base de données et mis à jour immédiat du tableau à l'écran
   async function updateStatus(id: string, status: string) {
@@ -206,14 +224,72 @@ export default function AdminPage() {
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
           <div className="border-b border-gray-200 px-6 py-5">
-            <h2 className="font-semibold text-[#3B0910]">
-              Demandes de devis
-            </h2>
-          </div>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-          {requests.length === 0 ? (
-            <div className="px-6 py-12 text-center text-gray-500">
-              Aucune demande de devis pour le moment.
+              <div>
+                <h2 className="font-semibold text-[#3B0910]">
+                  Demandes de devis
+                </h2>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  {filteredRequests.length} demande
+                  {filteredRequests.length !== 1 ? "s" : ""} affichée
+                  {filteredRequests.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                {/* recherche */}
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Rechercher..."
+                  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10 sm:w-64"
+                />
+
+              </div>
+              {/* Filtre statut */}
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10"
+              >
+                <option value="Tous"> Tous les statuts</option>
+
+                {STATUSES.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+
+              </select>
+            </div>
+
+          {filteredRequests.length === 0 ? (
+            <div className="px-6 py-12 text-center ">
+              {requests.length === 0 ? (
+                <p className="text-gray-500">
+                  Aucune demande de devis pour le moment.
+                </p>
+              ) : (
+                <>
+                  <p>
+                    Aucune demande ne correspond à votre recherche.
+                  </p>
+
+                  <button
+                  onClick={() => {
+                    setSearch("");
+                    setStatusFilter("Tous");
+                  }}
+                  className="mt-3 text-sm font-medium text-[#4A0015] hover:underline"
+                  >
+                    Réinitialiser les filtres
+                  </button>
+                </>
+              
+              )}
+              
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -246,7 +322,7 @@ export default function AdminPage() {
 
                 <tbody className="divide-y divide-gray-100">
 
-                  {requests.map((request) => (
+                  {filteredRequests.map((request) => (
                     <tr
                       key={request.id}
                       onClick={() => setSelectedRequest(request)}
@@ -450,6 +526,7 @@ export default function AdminPage() {
     </div>
   </div>
 )}
+  </div>
     </main>
   );
 }
