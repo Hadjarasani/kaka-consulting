@@ -47,6 +47,8 @@ export default function AdminPage() {
   const [requests, setRequests] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedRequest, setSelectedRequest] =
+  useState<QuoteRequest | null>(null);
 
   //modification du status dans la base de données et mis à jour immédiat du tableau à l'écran
   async function updateStatus(id: string, status: string) {
@@ -247,7 +249,8 @@ export default function AdminPage() {
                   {requests.map((request) => (
                     <tr
                       key={request.id}
-                      className="transition hover:bg-gray-50"
+                      onClick={() => setSelectedRequest(request)}
+                      className="cursor-pointer transition hover:bg-gray-50"
                     >
 
                       <td className="px-6 py-4">
@@ -285,9 +288,11 @@ export default function AdminPage() {
                       <td className="px-6 py-4">
                         <select
                           value={request.status}
-                          onChange={(event) =>
-                          updateStatus(request.id, event.target.value)
-                          }
+                          onClick={(event) => event.stopPropagation()}
+                          onChange={(event) => {
+                            event.stopPropagation();
+                            updateStatus(request.id, event.target.value)
+                          }}
                           className={`rounded-full border px-3 py-1.5 text-xs font-medium outline-none transition ${getStatusStyle(
                             request.status
                           )} focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10`}
@@ -312,6 +317,139 @@ export default function AdminPage() {
 
         </div>
       </div>
+      {selectedRequest && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-10"
+    onClick={() => setSelectedRequest(null)}
+  >
+    <div
+      className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+      onClick={(event) => event.stopPropagation()}
+    >
+      {/* En-tête */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
+        <div>
+          <h2 className="text-xl font-semibold text-[#3B0910]">
+            Détails de la demande
+          </h2>
+
+          <p className="mt-1 text-sm text-gray-500">
+            Reçue le{" "}
+            {new Date(
+              selectedRequest.created_at
+            ).toLocaleDateString("fr-FR")}
+          </p>
+        </div>
+
+        <button
+          onClick={() => setSelectedRequest(null)}
+          className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+          aria-label="Fermer"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Contenu */}
+      <div className="space-y-8 px-6 py-6">
+
+        {/* Entreprise / contact */}
+        <section>
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
+            Contact
+          </h3>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <DetailItem
+              label="Entreprise"
+              value={selectedRequest.company}
+            />
+
+            <DetailItem
+              label="Nom"
+              value={selectedRequest.name}
+            />
+
+            <DetailItem
+              label="Email"
+              value={selectedRequest.email}
+            />
+
+            <DetailItem
+              label="Téléphone"
+              value={selectedRequest.phone || "Non renseigné"}
+            />
+          </div>
+        </section>
+
+        {/* Projet */}
+        <section>
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
+            Projet
+          </h3>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <DetailItem
+              label="Type de projet"
+              value={selectedRequest.project_type}
+            />
+
+            <DetailItem
+              label="Budget"
+              value={selectedRequest.budget || "Non renseigné"}
+            />
+
+            <DetailItem
+              label="Délai souhaité"
+              value={selectedRequest.deadline || "Non renseigné"}
+            />
+          </div>
+        </section>
+
+        {/* Message */}
+        <section>
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
+            Message
+          </h3>
+
+          <div className="rounded-xl bg-gray-50 p-4 text-sm leading-6 text-gray-700">
+            {selectedRequest.message}
+          </div>
+        </section>
+
+        {/* Statut */}
+        <section>
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
+            Statut
+          </h3>
+
+          <select
+            value={selectedRequest.status}
+            onChange={(event) => {
+              const newStatus = event.target.value;
+
+              updateStatus(selectedRequest.id, newStatus);
+
+              setSelectedRequest({
+                ...selectedRequest,
+                status: newStatus,
+              });
+            }}
+            className={`rounded-full border px-4 py-2 text-sm font-medium outline-none transition ${getStatusStyle(
+              selectedRequest.status
+            )} focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10`}
+          >
+            {STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+        </section>
+      </div>
+    </div>
+  </div>
+)}
     </main>
   );
 }
@@ -327,6 +465,26 @@ function StatCard({
     <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
       <p className="text-sm text-gray-500">{label}</p>
       <p className="mt-2 text-3xl font-semibold text-[#3B0910]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function DetailItem({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div>
+      <p className="text-xs font-medium uppercase tracking-wide text-gray-400">
+        {label}
+      </p>
+
+      <p className="mt-1 break-words text-sm text-gray-800">
         {value}
       </p>
     </div>
