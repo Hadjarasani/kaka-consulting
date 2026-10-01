@@ -239,31 +239,48 @@ export default function AdminPage() {
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 {/* recherche */}
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Rechercher..."
-                  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10 sm:w-64"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Rechercher..."
+                    className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10 sm:w-64"
+                  />
 
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    🔍
+                  </span>
+                </div>
+
+                <select
+                  value={statusFilter}
+                  onChange={(event) => setStatusFilter(event.target.value)}
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10"
+                >
+                  <option value="Tous">Tous les statuts</option>
+
+                  {STATUSES.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+
+                {(search || statusFilter !== "Tous") && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearch("");
+                      setStatusFilter("Tous");
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-[#4A0015] transition hover:bg-gray-50"
+                  >
+                    Réinitialiser
+                  </button>
+                )}
+                </div>
               </div>
-              {/* Filtre statut */}
-              <select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10"
-              >
-                <option value="Tous"> Tous les statuts</option>
-
-                {STATUSES.map((status) => (
-                  <option key={status} value={status}>
-                    {status}
-                  </option>
-                ))}
-
-              </select>
-            </div>
 
           {filteredRequests.length === 0 ? (
             <div className="px-6 py-12 text-center ">
@@ -282,7 +299,7 @@ export default function AdminPage() {
                     setSearch("");
                     setStatusFilter("Tous");
                   }}
-                  className="mt-3 text-sm font-medium text-[#4A0015] hover:underline"
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-[#4A0015] transition hover:bg-gray-50"
                   >
                     Réinitialiser les filtres
                   </button>
