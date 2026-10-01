@@ -302,8 +302,12 @@ export default function QuoteForm() {
                         Sélectionnez une estimation
                       </option>
 
-                      <option value="Moins de 5 000 €">
-                        Moins de 5 000 €
+                      <option value="Moins de 1 000 €">
+                        Moins de 1 000 €
+                      </option>
+
+                      <option value="1000 - 5 000 €">
+                        1000 – 5 000 €
                       </option>
 
                       <option value="5 000 - 10 000 €">
