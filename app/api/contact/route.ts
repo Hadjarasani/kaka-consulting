@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 import { supabase } from "@/lib/supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -183,8 +185,44 @@ export async function POST(request: Request) {
             Cordialement,<br />
             <strong>L'équipe KAKA CONSULTING</strong>
           </p>
+          <!-- Logo -->
+          <div style="
+            margin-top: 25px;
+            text-align: center;
+          ">
+            <img
+              src="cid:kaka-logo"
+              alt="KAKA CONSULTING"
+              width="150"
+              style="
+                display: block;
+                margin: 0 auto;
+                max-width: 150px;
+                height: auto;
+              "
+            />
+
+            <p style="
+              margin-top: 10px;
+              color: #4A0015;
+              font-size: 12px;
+              letter-spacing: 1px;
+            ">
+              DÉVELOPPER • ANALYSER • TRANSFORMER
+            </p>
+          </div>
         </div>
       `,
+
+        attachments: [
+          {
+            filename: "kakaClogo.png",
+            content: fs.readFileSync(
+              path.join(process.cwd(), "public/images/kakaClogo.png")
+            ),
+            contentId: "kaka-logo",
+          },
+        ],
     });
 
     return NextResponse.json(
