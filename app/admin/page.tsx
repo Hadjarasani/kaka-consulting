@@ -16,6 +16,7 @@ type QuoteRequest = {
   deadline: string | null;
   message: string;
   status: string;
+  archived_at: string | null;
 };
 
 const STATUSES = [
@@ -51,10 +52,16 @@ export default function AdminPage() {
   useState<QuoteRequest | null>(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("Tous");
+  const [showArchived, setShowArchived] = useState(false);
 
   //créer les demandes filtrées
   const filteredRequests = requests.filter((request) => {
-  const searchValue = search.toLowerCase().trim();
+    const searchValue = search.toLowerCase().trim();
+
+    const matchesArchive =
+      showArchived
+        ? request.archived_at !== null
+        : request.archived_at === null;
 
     const matchesSearch =
       request.company.toLowerCase().includes(searchValue) ||
@@ -65,8 +72,8 @@ export default function AdminPage() {
       statusFilter === "Tous" ||
       request.status === statusFilter;
 
-    return matchesSearch && matchesStatus;
-  });
+    return matchesArchive && matchesSearch && matchesStatus;
+ });
 
   //modification du status dans la base de données et mis à jour immédiat du tableau à l'écran
   async function updateStatus(id: string, status: string) {
@@ -88,6 +95,66 @@ export default function AdminPage() {
           : request
       )
     );
+  }
+
+  //fonction d'archivage
+  async function archiveRequest(id: string) {
+    const archivedAt = new Date().toISOString();
+
+    const { error } = await supabase
+      .from("quote_requests")
+      .update({
+        archived_at: archivedAt,
+      })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      setError("Impossible d'archiver la demande.");
+      return;
+    }
+
+    setRequests((currentRequests) =>
+      currentRequests.map((request) =>
+        request.id === id
+          ? {
+              ...request,
+              archived_at: archivedAt,
+            }
+          : request
+      )
+    );
+
+    setSelectedRequest(null);
+  }
+
+  //fonction de restauration
+  async function restoreRequest(id: string) {
+    const { error } = await supabase
+      .from("quote_requests")
+      .update({
+        archived_at: null,
+      })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      setError("Impossible de restaurer la demande.");
+      return;
+    }
+
+    setRequests((currentRequests) =>
+      currentRequests.map((request) =>
+        request.id === id
+          ? {
+              ...request,
+              archived_at: null,
+            }
+          : request
+      )
+    );
+
+    setSelectedRequest(null);
   }
 
   useEffect(() => {
@@ -230,6 +297,40 @@ export default function AdminPage() {
                 <h2 className="font-semibold text-[#3B0910]">
                   Demandes de devis
                 </h2>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowArchived(false);
+                      setSearch("");
+                      setStatusFilter("Tous");
+                    }}
+                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                      !showArchived
+                        ? "bg-[#4A0015] text-white"
+                        : "text-gray-500 hover:bg-gray-100"
+                    }`}
+                  >
+                    Actives
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowArchived(true);
+                      setSearch("");
+                      setStatusFilter("Tous");
+                    }}
+                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                      showArchived
+                        ? "bg-[#4A0015] text-white"
+                        : "text-gray-500 hover:bg-gray-100"
+                    }`}
+                  >
+                    Archivées
+                  </button>
+                </div>
 
                 <p className="mt-1 text-sm text-gray-500">
                   {filteredRequests.length} demande
@@ -532,12 +633,32 @@ export default function AdminPage() {
               selectedRequest.status
             )} focus:border-[#4A0015] focus:ring-2 focus:ring-[#4A0015]/10`}
           >
+
             {STATUSES.map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
             ))}
           </select>
+          <div className="mt-6 flex justify-end">
+              {selectedRequest.archived_at === null ? (
+                <button
+                  type="button"
+                  onClick={() => archiveRequest(selectedRequest.id)}
+                  className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:border-gray-300 hover:bg-gray-50"
+                >
+                  Archiver la demande
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => restoreRequest(selectedRequest.id)}
+                  className="rounded-lg border border-[#4A0015]/20 px-4 py-2 text-sm font-medium text-[#4A0015] transition hover:bg-[#4A0015]/5"
+                >
+                  Restaurer la demande
+                </button>
+              )}
+            </div>
         </section>
       </div>
     </div>
