@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KAKA CONSULTING | Développement Web, Data & Intelligence Artificielle",
-  description: "KAKA CONSULTING accompagne les entreprises dans leur transformation digitale grâce au développement web, aux solutions data et à l'intelligence artificielle.",
+  title: "KAKA CONSULTING | Services & Conseil en Informatique",
+  description: "KAKA CONSULTING accompagne les entreprises dans leur transformation digitale : développement web, logiciels, data et intelligence artificielle.",
 };
 
 export default function RootLayout({
