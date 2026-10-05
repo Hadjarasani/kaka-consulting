@@ -15,8 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KAKA CONSULTING | Services & Conseil en Informatique",
-  description: "KAKA CONSULTING accompagne les entreprises dans leur transformation digitale : développement web, logiciels, data et intelligence artificielle.",
+  metadataBase: new URL("https://kakaconsulting.fr"),
+
+  title: {
+    default: "KAKA CONSULTING | Services & Conseil en Informatique",
+    template: "%s | KAKA CONSULTING",
+  },
+
+  description:
+    "KAKA CONSULTING accompagne les entreprises dans leur transformation digitale : développement web, logiciels, data et intelligence artificielle.",
+
   keywords: [
     "KAKA CONSULTING",
     "conseil informatique",
@@ -26,6 +34,25 @@ export const metadata: Metadata = {
     "intelligence artificielle",
     "transformation digitale",
   ],
+
+  openGraph: {
+    title: "KAKA CONSULTING | Services & Conseil en Informatique",
+    description:
+      "KAKA CONSULTING accompagne les entreprises dans leur transformation digitale : développement web, logiciels, data et intelligence artificielle.",
+    url: "https://kakaconsulting.fr",
+    siteName: "KAKA CONSULTING",
+    locale: "fr_FR",
+    type: "website",
+
+    images: [
+    {
+      url: "/images/og-kakaconsulting.png",
+      width: 1200,
+      height: 630,
+      alt: "KAKA CONSULTING | Services & Conseil en Informatique",
+    },
+  ],
+  },
 };
 
 export default function RootLayout({
