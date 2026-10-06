@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
@@ -21,7 +21,8 @@ export default function Footer() {
           />
 
           <p className="mt-6 text-sm leading-7 text-gray-300">
-            Solutions web, data et intelligence artificielle pour accélérer votre transformation digitale.
+            Solutions web, data et intelligence artificielle pour accélérer
+            votre transformation digitale.
           </p>
         </div>
 
@@ -33,25 +34,37 @@ export default function Footer() {
           </h3>
 
           <ul className="space-y-3 text-gray-300">
+
             <li className="transition hover:translate-x-1 hover:text-white">
-              <Link href="/">Accueil</Link>
+              <Link href="/">
+                Accueil
+              </Link>
             </li>
 
             <li className="transition hover:translate-x-1 hover:text-white">
-              <Link href="/services">Services</Link>
+              <Link href="/services">
+                Services
+              </Link>
             </li>
 
             <li className="transition hover:translate-x-1 hover:text-white">
-              <Link href="/#sectors">Secteurs d'activité</Link>
+              <Link href="/#secteurs">
+                Secteurs d&apos;activité
+              </Link>
             </li>
 
             <li className="transition hover:translate-x-1 hover:text-white">
-              <Link href="/#about">Nous connaître</Link>
+              <Link href="/#apropos">
+                Nous connaître
+              </Link>
             </li>
 
             <li className="transition hover:translate-x-1 hover:text-white">
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">
+                Contact
+              </Link>
             </li>
+
           </ul>
         </div>
 
@@ -65,7 +78,7 @@ export default function Footer() {
           <ul className="space-y-3 text-gray-300">
             <li>Développement web</li>
             <li>Logiciels métier</li>
-            <li>Data & BI</li>
+            <li>Data &amp; BI</li>
             <li>Intelligence artificielle</li>
           </ul>
         </div>
@@ -79,33 +92,58 @@ export default function Footer() {
 
           <div className="space-y-4 text-gray-300">
 
-            <div className="flex items-center gap-2">
+            {/* Email */}
+
+            <a
+              href="mailto:contact@kakaconsulting.fr"
+              className="flex items-center gap-2 transition hover:text-white"
+            >
               <Mail size={18} />
               <span>contact@kakaconsulting.fr</span>
+            </a>
+
+            {/* Téléphone */}
+
+            <a
+              href="tel:+33641163021"
+              className="flex items-center gap-2 transition hover:text-white"
+            >
+              <Phone size={18} />
+              <span>+33 6 41 16 30 21</span>
+            </a>
+
+            {/* Adresse */}
+
+            <div className="flex items-start gap-2">
+              <MapPin size={18} className="mt-0.5 shrink-0" />
+              <span>
+                9 Avenue de la Bolière
+                <br />
+                45100 Orléans, France
+              </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <MapPin size={18} />
-              <span>Belgique · France</span>
-            </div>
+            {/* LinkedIn */}
 
             <a
               href="https://www.linkedin.com/company/kaka-consulting/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-white"
+              className="flex items-center gap-2 transition hover:text-white"
             >
               <FaLinkedin size={20} />
               <span>LinkedIn</span>
             </a>
 
+            {/* Instagram */}
+
             <a
-            href="https://www.instagram.com/kakaconsulting?igsh=NXA5M2oybXd5NW5j&utm_source=qr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white"
+              href="https://www.instagram.com/kakaconsulting?igsh=NXA5M2oybXd5NW5j&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 transition hover:text-white"
             >
-              <FaInstagram size={20}/>
+              <FaInstagram size={20} />
               <span>Instagram</span>
             </a>
 
@@ -114,8 +152,34 @@ export default function Footer() {
 
       </div>
 
+      {/* Bas du footer */}
+
       <div className="border-t border-white/10 py-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} KAKA CONSULTING — Tous droits réservés.
+
+        <p>
+          © {new Date().getFullYear()} KAKA CONSULTING — Tous droits réservés.
+        </p>
+
+        <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-2">
+
+          <Link
+            href="/mentions-legales"
+            className="transition hover:text-white"
+          >
+            Mentions légales
+          </Link>
+
+          <span className="text-white/20">|</span>
+
+          <Link
+            href="/politique-confidentialite"
+            className="transition hover:text-white"
+          >
+            Politique de confidentialité
+          </Link>
+
+        </div>
+
       </div>
 
     </footer>
