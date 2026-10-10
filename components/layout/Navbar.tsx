@@ -67,8 +67,8 @@ export default function Navbar() {
         </button>
       </nav>
       {isOpen && (
-        <div className="lg:hidden bg-white border-t">
-          <div className="flex flex-col gap-6 p-6">
+        <div className="lg:hidden border-t border-gray-200 bg-white">
+          <div className="flex flex-col gap-6 p-6 text-[#3B0910]">
             <Link 
             href="/#services"
             onClick={() => setIsOpen(false)}
