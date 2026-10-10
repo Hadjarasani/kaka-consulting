@@ -59,11 +59,13 @@ export default function Navbar() {
         >
           Demander un devis
         </Link>
-        <button 
-        className="lg:hidden"
-        onClick={() => setIsOpen(!isOpen)}
+        <button
+          className="lg:hidden text-[#3B0910] transition-colors hover:text-[#701C2C]"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={isOpen}
         >
-        {isOpen ? <X size={28}/> : <Menu size={28}/>}
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </nav>
       {isOpen && (
