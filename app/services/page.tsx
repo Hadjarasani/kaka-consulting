@@ -7,7 +7,7 @@ export default function ServicesPage() {
     return (
         <>
             {/* zone blanche pour le lien de retour */}
-            <div className="bg-white px-4 py-2">
+            <div className="relative z-10 flex h-14 items-center bg-white px-4">
                 <Link
                     href="/"
                     aria-label="Retour à l'accueil"
