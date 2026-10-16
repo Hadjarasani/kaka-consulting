@@ -7,7 +7,7 @@ export default function ContactPage() {
   return (
     <>
          {/* zone blanche pour le lien de retour */}
-            <div>
+            <div className="bg-white px-4 py-2">
                 <Link
                     href="/"
                     aria-label="Retour à l'accueil"
