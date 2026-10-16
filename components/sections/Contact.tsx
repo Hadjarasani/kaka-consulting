@@ -118,7 +118,7 @@ export default function Contact() {
             <div className="grid gap-6 md:grid-cols-2">
 
               <div>
-                <label className="mb-2 flex items-center gap-2 font-medium">
+                <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#3B0910]">
                   <User size={18} />
                   Nom complet
                 </label>
@@ -128,12 +128,12 @@ export default function Contact() {
                   placeholder="Votre nom"
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
+                  className="w-full rounded-xl border border-gray-300 bg-white p-4 text-base text-gray-900 placeholder:text-gray-500 outline-none focus:border-[#701C2C] focus:ring-2 focus:ring-[#701C2C]/20"
                 />
               </div>
 
               <div>
-                <label className="mb-2 flex items-center gap-2 font-medium">
+                <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#3B0910]">
                   <Mail size={18} />
                   E-mail
                 </label>
@@ -143,14 +143,14 @@ export default function Contact() {
                   placeholder="contact@entreprise.com"
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
+                  className="w-full rounded-xl border border-gray-300 bg-white p-4 text-base text-gray-900 placeholder:text-gray-500 outline-none focus:border-[#701C2C] focus:ring-2 focus:ring-[#701C2C]/20"
                 />
               </div>
 
             </div>
 
             <div>
-              <label className="mb-2 flex items-center gap-2 font-medium">
+              <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#3B0910]">
                 <Building2 size={18} />
                 Entreprise
               </label>
@@ -160,12 +160,12 @@ export default function Contact() {
                 placeholder="Nom de votre entreprise"
                 value={company} 
                 onChange={(e) => setCompany(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
+                className="w-full rounded-xl border border-gray-300 bg-white p-4 text-base text-gray-900 placeholder:text-gray-500 outline-none focus:border-[#701C2C] focus:ring-2 focus:ring-[#701C2C]/20"
               />
             </div>
 
             <div>
-              <label className="mb-2 flex items-center gap-2 font-medium">
+              <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#3B0910]">
                 <FileText size={18} />
                 Message
               </label>
@@ -175,7 +175,7 @@ export default function Contact() {
                 placeholder="Décrivez votre projet..."
                 value={message} 
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-[#701C2C]"
+                className="w-full rounded-xl border border-gray-300 bg-white p-4 text-base text-gray-900 placeholder:text-gray-500 outline-none focus:border-[#701C2C] focus:ring-2 focus:ring-[#701C2C]/20"
               />
             </div>
             
